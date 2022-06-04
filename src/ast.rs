@@ -2,7 +2,7 @@ use std::fmt;
 
 use super::vector::Vector;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Ast {
     ReprQuad(Vector),
     ReprTrue(Vector),
