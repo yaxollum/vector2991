@@ -1,50 +1,30 @@
-# base2991
+# vector2991
 
-A calculator that can do floating-point operations in 4 different bases: decimal, binary, octal, and hexadecimal. It supports base conversions and arithmetic operations (addition, subtraction, multiplication, and divison).
+A calculator that can do operations on 2D algebraic vectors (addition, subtraction, scalar multiplication). For both input and output, vectors can be represented in three forms:
+1. Coordinates (e.g. `(30.31,-17.50)`)
+2. True Bearing (e.g. `35 [120]`)
+3. Quadrant Bearing (e.g. `35 [S60W]`)
 
 ## Example session
 
 ```
-> 5d+3d
-8.0000000000_10
-> 5d*3d_b
-1111.0000000000_2
-> 5d/3d_o
-1.5252525253_8
-> 3h+30d*50o-100b
-4af.0000000000_16
-> baf.bafh_d
-2991.7302246094_10
+> 35 [N120E]
+(30.31,-17.50)
+> 35 [N120E]_q
+35.00 [S60W]
+> 35[N12E] + 5[S5W]
+(6.84,29.25)
+> 35[N12E] + 5[S5W]_t
+30.04 [13.16]
+> 35[N12E] + 5[S5W]_q
+30.04 [N13E]
+> 3*35[N]-2*5[S]
+(0.00,115.00)
+> 3*5*5[E]
+(75.00,0.00)
+> 3*5*5[E]_q
+75.00 [E]
 ```
 
 ## Grammar
-Below is a skeleton of base2991's grammar. View the full LALRPOP grammar at [src/parser.lalrpop](https://github.com/yaxollum/base2991/blob/main/src/parser.lalrpop).
-
-```
-Ast = {
-    (),
-    BaseConv
-}
-
-BaseConv = {
-    <Add> "_" r"[xh]",
-    <Add> "_" "b",
-    <Add> "_" "o",
-    <Add> "_" "d",
-    Add
-}
-
-Add = {
-    <a:Mul> "+" <b:Add>,
-    <a:Mul> "-" <b:Add>,
-    Mul
-}
-
-Mul = {
-    <a:Num> "*" <b:Mul>,
-    <a:Num> "/" <b:Mul>,
-    Num
-}
-
-Num = r"[0-9a-fA-F]+(\.[0-9a-fA-F]+)?[bdoxh]"
-```
+vector2991's LALRPOP grammar can be found at [src/parser.lalrpop](https://github.com/yaxollum/vector2991/blob/main/src/parser.lalrpop).
