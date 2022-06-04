@@ -19,6 +19,11 @@ Add: Vector={
 
 Mul:Vector={
     <a:Num> "*" <b:Mul>=>b.scale(a),
+    Group
+}
+
+Group: Vector={
+    "(" <a:Add> ")"=>a,
     VectorLiteral
 }
 
