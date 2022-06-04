@@ -28,6 +28,7 @@ VectorLiteral: Vector={
 }
 
 Direction: Vector={
+    <ang:Num>=>Vector::from_dir(90.0-ang),
     "E"=>Vector::from_dir(0.0),
     "N"=>Vector::from_dir(90.0),
     "W"=>Vector::from_dir(180.0),

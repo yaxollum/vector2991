@@ -24,6 +24,8 @@ A calculator that can do operations on 2D algebraic vectors (addition, subtracti
 (75.00,0.00)
 > 3*5*5[E]_q
 75.00 [E]
+> 5[45]+3[N]
+(3.54,6.54)
 ```
 
 ## Grammar
