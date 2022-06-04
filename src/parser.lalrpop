@@ -12,8 +12,8 @@ pub Ast: Ast = {
 }
 
 Add: Vector={
-    <a:MulLeading> "+" <b:Add>=>a.add(&b),
-    <a:MulLeading> "-" <b:Add>=>a.sub(&b),
+    <a:Add> "+" <b:MulLeading>=>a.add(&b),
+    <a:Add> "-" <b:MulLeading>=>a.sub(&b),
     MulLeading
 }
 
