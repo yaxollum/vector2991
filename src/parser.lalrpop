@@ -12,13 +12,18 @@ pub Ast: Ast = {
 }
 
 Add: Vector={
-    <a:Mul> "+" <b:Add>=>a.add(&b),
-    <a:Mul> "-" <b:Add>=>a.sub(&b),
-    Mul
+    <a:MulLeading> "+" <b:Add>=>a.add(&b),
+    <a:MulLeading> "-" <b:Add>=>a.sub(&b),
+    MulLeading
 }
 
-Mul:Vector={
-    <a:Num> "*" <b:Mul>=>b.scale(a),
+MulLeading:Vector={
+    <a:Num> "*" <b:MulLeading>=>b.scale(a),
+    MulTrailing
+}
+
+MulTrailing: Vector={
+    <b:MulTrailing> "*" <a:Num>=>b.scale(a),
     Group
 }
 
