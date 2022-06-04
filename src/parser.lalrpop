@@ -1,0 +1,52 @@
+use super::ast::Ast;
+use super::vector::Vector;
+use lalrpop_util::ParseError;
+
+grammar;
+
+pub Ast: Ast = {
+    () => Ast::NOP,
+    <Add> "_" "q"=>Ast::ReprQuad(<>),
+    <Add> "_" "t"=>Ast::ReprTrue(<>),
+    <Add>=>Ast::ReprCoord(<>),
+}
+
+Add: Vector={
+    <a:Mul> "+" <b:Add>=>a.add(&b),
+    <a:Mul> "-" <b:Add>=>a.sub(&b),
+    Mul
+}
+
+Mul:Vector={
+    <a:Num> "*" <b:Mul>=>b.scale(a),
+    VectorLiteral
+}
+
+VectorLiteral: Vector={
+    <mag:Num> "[" <dir:Direction> "]" => dir.scale(mag),
+    "(" <x:Num> "," <y:Num> ")"=>Vector::new(x,y),
+}
+
+Direction: Vector={
+    "E"=>Vector::from_dir(0.0),
+    "N"=>Vector::from_dir(90.0),
+    "W"=>Vector::from_dir(180.0),
+    "S"=>Vector::from_dir(270.0),
+    "NE"=>Vector::from_dir(45.0),
+    "NW"=>Vector::from_dir(135.0),
+    "SW"=>Vector::from_dir(225.0),
+    "SE"=>Vector::from_dir(315.0),
+    "E" <ang:Num> "S"=>Vector::from_dir(-ang),
+    "E" <ang:Num> "N"=>Vector::from_dir(ang),
+    "N" <ang:Num> "E"=>Vector::from_dir(90.0-ang),
+    "N" <ang:Num> "W"=>Vector::from_dir(90.0+ang),
+    "W" <ang:Num> "N"=>Vector::from_dir(180.0-ang),
+    "W" <ang:Num> "S"=>Vector::from_dir(180.0+ang),
+    "S" <ang:Num> "W"=>Vector::from_dir(270.0-ang),
+    "S" <ang:Num> "E"=>Vector::from_dir(270.0+ang),
+}
+
+Num: f64 = {
+    r"[0-9]+(\.[0-9]+)?" =>? match <>.parse() {Ok(num)=>
+    Ok(num),_=>Err(ParseError::User{error:"invalid literal"}) },
+}
