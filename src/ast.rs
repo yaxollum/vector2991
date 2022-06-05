@@ -41,11 +41,11 @@ impl fmt::Display for Quad {
         } else if ang == 90 {
             write!(f, "E")
         } else if ang < 180 {
-            write!(f, "S{}W", 180 - ang)
+            write!(f, "S{}E", 180 - ang)
         } else if ang == 180 {
             write!(f, "S")
         } else if ang < 270 {
-            write!(f, "S{}E", ang - 180)
+            write!(f, "S{}W", ang - 180)
         } else if ang == 270 {
             write!(f, "W")
         } else {
